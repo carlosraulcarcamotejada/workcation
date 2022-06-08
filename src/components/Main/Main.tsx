@@ -1,9 +1,9 @@
 import { FC } from 'react'
 //import useFetchPhotos from '../../hooks/useFetchPhotos';
-import useFetchPhotosUP from '../../hooks/useFetchPhotosUP';
-import Loading from '../Loader/Loading';
+import useFetchPhotosUP from '../../hooks/useFetchPhotos';
 import PlaceCard from '../PlaceCard/PlaceCard'
 import PlaceCards from '../PlaceCards/PlaceCards'
+import Spinner from '../Spinner/Spinner'
 
 const Main:FC = () => {
 
@@ -15,7 +15,7 @@ const Main:FC = () => {
     <main className='px-4 py-6'>
         <SearhResults />
         <PlaceCards>
-          {loading?<Loading />:
+          {loading?<Spinner />:
           photos.map( ({id ,urls:url}) => <PlaceCard key={id} id={id} url={url.small} /> )}
         </PlaceCards>
     </main>

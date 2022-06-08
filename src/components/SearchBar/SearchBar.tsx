@@ -1,11 +1,13 @@
-import { useState, FC } from 'react';
-import { SearchIcon, AdjustmentsIcon } from '@heroicons/react/solid';
+import { FC, useState, useRef, HTMLInputTypeAttribute } from 'react';
+import { SearchIcon, FilterIcon, XCircleIcon } from '@heroicons/react/solid';
+import useForm from '../../hooks/useForm';
+
 
 
 const SearchBar:FC = () => {
 
-
   const [isOpen, setisOpen] = useState<boolean>(false);
+
   
   return (
     <section className='bg-gray-800 '>
@@ -20,12 +22,33 @@ const SearchBar:FC = () => {
 
 
 const InputSearch:FC = () => {
+
+  const {form,handleInputChange,handleReset} = useForm();
+  const {inputSearch} = form;
+  const inputSearchReference = useRef<HTMLInputElement>(null);
+
+
   return (
     <div className='relative'>
-    <div className='absolute inset-y-0 left-0 flex items-center pl-2'>
-      <div className="h-6 w-6 fill-current text-gray-600" > <SearchIcon /> </div>
-    </div>
-    <input className='mt-0 bg-gray-900 focus:outline-none focus:bg-gray-200 focus:text-gray-900 text-white rounded-lg pl-10' type="text" placeholder='Search by keywords' />
+      <div className='absolute inset-y-0 left-0 flex items-center pl-2'>
+        <div className="h-6 w-6 fill-current text-gray-600" > <SearchIcon /> </div>
+      </div>
+      <div className={`${(inputSearch.length === 0)&&'hidden '} absolute inset-y-0 right-0 flex items-center pr-2 pl-2 `}>
+        <button onClick={()=>{handleReset();
+        inputSearchReference.current?.focus();
+        }} className="h-6 w-6 fill-current text-gray-600" > <XCircleIcon /> </button>
+      </div>
+    <input 
+    name='inputSearch'
+    id='inputSearch'
+    onChange={e=>handleInputChange(e)}
+    value={inputSearch}
+    className='mt-0 bg-gray-900 focus:outline-none 
+            focus:bg-gray-200 focus:text-gray-900 
+            text-white rounded-lg pl-10' 
+    type="text"
+    ref={inputSearchReference}
+     placeholder='Search' />
   </div>
   )
 }
@@ -41,7 +64,7 @@ const ButtonFilter:FC<{isOpen:boolean,setisOpen:Function}> = ({isOpen,setisOpen}
                             onClick={()=> setisOpen(!isOpen)} 
     >
                  
-      <div  className="h-6 w-6 fill-current "> <AdjustmentsIcon /> </div>
+      <div  className="h-6 w-6 fill-current "> <FilterIcon /> </div>
       <span className='ml-1 text-white font-medium'>Filters</span>
     </button>
   </div>
@@ -108,10 +131,7 @@ const FilterPanel:FC<{isOpen:boolean}> = ({isOpen}) => {
         <span className='block text-sm font-semibold text-gray-500'>Property Type</span>
         {
           propertyOptions.map( ({id,option}) => {return (
-            <div className='flex items-center ' key={id}>
-              <input  type="radio" name='propertyT' id={option} value={option}/>
-              <label className='mt-3 ml-2 text-white' key={option} htmlFor='propertyT'>{option}</label>
-            </div>
+            <RadioButton key={id} option={option} />
           )})
         }
       </fieldset>
@@ -119,11 +139,8 @@ const FilterPanel:FC<{isOpen:boolean}> = ({isOpen}) => {
       <fieldset className='px-4 py-4 border-t border-gray-900'>
         <span className='block text-sm font-semibold text-gray-500'>Amenities</span>
         {
-          checkboxOptions.map( ({option}) => {return (
-            <div className='flex items-center'  key={option}>
-              <input  type="checkbox" name="balcony" id={option} value={option} />
-              <label className="mt-3 ml-2 text-white">{option}</label>
-            </div>
+          checkboxOptions.map( ({id,option}) => {return (
+            <CheckBox key={id} option={option}/>
           )})
         }
       </fieldset>
@@ -135,6 +152,24 @@ const FilterPanel:FC<{isOpen:boolean}> = ({isOpen}) => {
   )
 } 
 
+
+const CheckBox:FC<{option:string}> = ({option}) => {
+  return (
+    <div className='flex items-center'  key={option}>
+      <input  type="checkbox" name="balcony" id={option} value={option} />
+      <label className="mt-3 ml-2 text-white">{option}</label>
+    </div>
+    )
+}
+
+const RadioButton:FC<{option:string}> = ({option}) => {
+  return (
+    <div className='flex items-center '>
+      <input  type="radio" name='propertyT' id={option} value={option}/>
+      <label className='mt-3 ml-2 text-white' key={option} htmlFor='propertyT'>{option}</label>
+  </div>
+  )
+}
 
 
 

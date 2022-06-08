@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MenuIcon, XIcon } from '@heroicons/react/solid';
+import { motion } from 'framer-motion';
 
 const Header:FC = () => {
 
@@ -87,7 +88,8 @@ const NavBar:FC<{isOpen:boolean}> = ({isOpen}) => {
   ];
 
   return (
-    <nav className={`${!isOpen&&'hidden'}`}>
+    <div  
+    className={`${!isOpen&&'hidden'}`}>
       <div className='px-2 pt-2 pb-5 border-b border-gray-800'>
         {
             links.map( ({link}) => <Link className='mt-1 block px-3 py-1 rounded first:mt-0 font-semibold text-white hover:bg-gray-800' key={link} to={"#"}>{link}</Link> )
@@ -104,7 +106,7 @@ const NavBar:FC<{isOpen:boolean}> = ({isOpen}) => {
             }
           </div>
       </div>
-    </nav>
+    </div>
   );
 };
 
