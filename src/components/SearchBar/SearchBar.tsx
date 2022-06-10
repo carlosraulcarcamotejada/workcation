@@ -1,7 +1,7 @@
-import { FC, useState, useRef, HTMLInputTypeAttribute } from 'react';
-import { SearchIcon, FilterIcon, XCircleIcon } from '@heroicons/react/solid';
+import { FC, useState, useRef } from 'react';
+import { SearchIcon, AdjustmentsIcon, XCircleIcon } from '@heroicons/react/solid';
 import useForm from '../../hooks/useForm';
-
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 const SearchBar:FC = () => {
@@ -23,20 +23,19 @@ const SearchBar:FC = () => {
 
 const InputSearch:FC = () => {
 
-  const {form,handleInputChange,handleReset} = useForm();
-  const {inputSearch} = form;
+  const {form:{inputSearch},handleInputChange,handleReset} = useForm();
   const inputSearchReference = useRef<HTMLInputElement>(null);
 
 
   return (
     <div className='relative'>
-      <div className='absolute inset-y-0 left-0 flex items-center pl-2'>
+      <div className='absolute inset-y-0 left-0 flex items-center p-2'>
         <div className="h-6 w-6 fill-current text-gray-600" > <SearchIcon /> </div>
       </div>
-      <div className={`${(inputSearch.length === 0)&&'hidden '} absolute inset-y-0 right-0 flex items-center pr-2 pl-2 `}>
-        <button onClick={()=>{handleReset();
+      <div className={`${(inputSearch.length === 0)&&'hidden '} absolute inset-y-0 right-0 flex items-center p-2`}>
+        <button type='button' onClick={()=>{handleReset();
         inputSearchReference.current?.focus();
-        }} className="h-6 w-6 fill-current text-gray-600" > <XCircleIcon /> </button>
+        }} className={`h-6 w-6 fill-current text-gray-600`} > <XCircleIcon /> </button>
       </div>
     <input 
     name='inputSearch'
@@ -45,7 +44,7 @@ const InputSearch:FC = () => {
     value={inputSearch}
     className='mt-0 bg-gray-900 focus:outline-none 
             focus:bg-gray-200 focus:text-gray-900 
-            text-white rounded-lg pl-10' 
+            text-white rounded-lg pl-9 pr-8' 
     type="text"
     ref={inputSearchReference}
      placeholder='Search' />
@@ -53,7 +52,7 @@ const InputSearch:FC = () => {
   )
 }
 
-const ButtonFilter:FC<{isOpen:boolean,setisOpen:Function}> = ({isOpen,setisOpen}) => {
+const ButtonFilter:FC<{isOpen:boolean,setisOpen:(isOpen:boolean) => void}> = ({isOpen,setisOpen}) => {
   return (
     <div className='flex items-center'>
     <button 
@@ -64,7 +63,7 @@ const ButtonFilter:FC<{isOpen:boolean,setisOpen:Function}> = ({isOpen,setisOpen}
                             onClick={()=> setisOpen(!isOpen)} 
     >
                  
-      <div  className="h-6 w-6 fill-current "> <FilterIcon /> </div>
+      <div  className="h-6 w-6 fill-current "> <AdjustmentsIcon /> </div>
       <span className='ml-1 text-white font-medium'>Filters</span>
     </button>
   </div>
@@ -97,8 +96,15 @@ const FilterPanel:FC<{isOpen:boolean}> = ({isOpen}) => {
 
 
   return (
-    <div className={`${!isOpen&&'hidden'}`}>
-      <fieldset className='px-4 py-4 border-t border-gray-900'>
+    <motion.div 
+    animate={{
+      height: isOpen ? "100%" : "0",
+    }}
+    >
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div>
+               <fieldset className='px-4 py-4 border-t border-gray-900'>
         <div className='flex -mx-2'>
           {
             selectOptions.map( ({id,option,range}) => {return ( 
@@ -148,7 +154,12 @@ const FilterPanel:FC<{isOpen:boolean}> = ({isOpen}) => {
       <div className='bg-gray-900 px-4 py-4'>
         <button className='bg-indigo-500 hover:bg-indigo-400 font-semibold text-white px-4 py-2 rounded-lg w-full'>Update results</button>
       </div>
-    </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+
+ 
+    </motion.div>
   )
 } 
 
