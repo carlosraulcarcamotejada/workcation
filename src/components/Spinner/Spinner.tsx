@@ -2,7 +2,7 @@ import { FC } from "react";
 
 const Loader: FC = () => {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className=" flex w-full justify-center">
       <svg
         className="text-gray-500 "
         viewBox="0 0 2400 2400"

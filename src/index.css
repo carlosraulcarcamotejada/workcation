@@ -25,11 +25,11 @@
   [type='radio']
   {
     @apply form-radio mt-3 shadow bg-gray-900 w-6 h-6 border-transparent 
-    focus:ring-indigo-500 focus:border-indigo-500 focus:bg-indigo-500 checked:bg-indigo-500 active:bg-indigo-500
+    focus:ring-indigo-500 checked:bg-indigo-500 text-indigo-500 active:bg-indigo-500
   }
   [type='checkbox']{
     @apply form-checkbox mt-3 rounded-lg shadow bg-gray-900 w-6 h-6 border-transparent
-    focus:ring-indigo-500 focus:border-indigo-500 focus:bg-indigo-500 checked:bg-indigo-500 active:bg-indigo-500
+    focus:ring-indigo-500  checked:bg-indigo-500 text-indigo-500 active:bg-indigo-500
   }
 
 
