@@ -24,11 +24,11 @@
   }
   [type='radio']
   {
-    @apply form-radio mt-3 shadow bg-gray-900 w-6 h-6 border-transparent 
+    @apply form-radio shadow bg-gray-900 w-6 h-6 border-transparent 
     focus:ring-indigo-500 checked:bg-indigo-500 text-indigo-500 active:bg-indigo-500
   }
   [type='checkbox']{
-    @apply form-checkbox mt-3 rounded-lg shadow bg-gray-900 w-6 h-6 border-transparent
+    @apply form-checkbox rounded-lg shadow bg-gray-900 w-6 h-6 border-transparent
     focus:ring-indigo-500  checked:bg-indigo-500 text-indigo-500 active:bg-indigo-500
   }
 

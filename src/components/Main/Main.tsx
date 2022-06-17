@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import useFetchPhotos from '../../hooks/useFetchPhotos';
-import PlaceCard from '../PlaceCard/PlaceCard';
-import PlaceCards from '../PlaceCards/PlaceCards';
+import Card from '../Card/Card';
+import Cards from '../Cards/Cards';
 import Spinner from '../Spinner/Spinner';
 
 const Main:FC<{searchField:string}> = ({searchField}) => {
@@ -11,12 +11,16 @@ const Main:FC<{searchField:string}> = ({searchField}) => {
 
 
   return (
-    <main className='px-4 py-6 xl:overflow-x-hidden'>
+    <main className='px-4 py-6 xl:overflow-x-hidden z-0 '>
         <Results searchField={searchField}/>
-        <PlaceCards>
+        <Cards>
           {loading?<Spinner />:
-          photos.map( ({id ,urls:url}) => <PlaceCard key={id} id={id} url={url.full} /> )}
-        </PlaceCards>
+          photos.map( ({id ,urls:url}) => {return (
+            <Card key={id} id={id} url={url.full} /> 
+          )}
+          
+          )}
+        </Cards>
     </main>
   )
 

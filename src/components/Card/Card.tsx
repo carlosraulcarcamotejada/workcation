@@ -2,7 +2,7 @@ import {FC} from 'react';
 import {StarIcon} from '@heroicons/react/solid';
 
 
-const PlaceCard:FC<{id:string, url:string}> = ({id, url}) => {
+const Card:FC<{id:string, url:string}> = ({id, url}) => {
 
   
   return (
@@ -75,4 +75,4 @@ const PosterImage:FC<{url:string, id:string | number}> = ({url, id}) => {
 }
 
 
-export default PlaceCard;
+export default Card;
