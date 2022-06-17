@@ -11,16 +11,15 @@ const Main:FC<{searchField:string}> = ({searchField}) => {
 
 
   return (
-    <main className='px-4 py-6 xl:overflow-x-hidden z-0 '>
-        <Results searchField={searchField}/>
-        <Cards>
-          {loading?<Spinner />:
+    <main className='px-4 py-6 xl:overflow-x-hidden '>
+      <Results searchField={searchField} />
+      <Cards>
+        {loading?<Spinner />:
           photos.map( ({id ,urls:url}) => {return (
-            <Card key={id} id={id} url={url.full} /> 
+          <Card key={id} id={id} url={url.full} /> 
           )}
-          
-          )}
-        </Cards>
+        )}
+      </Cards>
     </main>
   )
 
@@ -29,11 +28,16 @@ const Main:FC<{searchField:string}> = ({searchField}) => {
 
 const Results:FC<{searchField:string}> = ({searchField}) => {
     return (
-      <div className=''>
-        <h3 className='text-gray-900 text-xl'>{searchField}</h3>
-        <p className='text-gray-600'>Live like the stars in these luxurios Sourthen California states.</p>
-      </div>
+      <div>
+        {
+          searchField.length > 0 &&
+            <>
+              <h3 className='text-gray-900 text-xl'>{searchField}</h3>
+              <p className='text-gray-600'>Live like the stars in these luxurios Sourthen {searchField} states.</p>
+            </>
+        }
+      </div>      
     )
 }
 
-export default Main
+export default Main;
